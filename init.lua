@@ -27,4 +27,6 @@ require("lazy").setup({
     require("plugins.alpha"),
     require("plugins.indent-blankline"),
     require("plugins.debug"),
+    require("plugins.misc"),
+    require("plugins.tstools"),
 })

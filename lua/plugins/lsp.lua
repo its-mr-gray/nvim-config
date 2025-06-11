@@ -5,8 +5,7 @@ return { -- LSP Configuration & Plugins
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/nvim-cmp",
+
         -- Useful status updates for LSP.
         -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
         {
@@ -27,6 +26,15 @@ return { -- LSP Configuration & Plugins
         },
     },
     config = function()
+        vim.diagnostic.config({
+            virtual_text = {
+                prefix = "●", -- or any symbol you like
+                spacing = 2,
+            },
+            signs = true,
+            underline = true,
+            update_in_insert = false,
+        })
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
             -- Create a function that lets us more easily define mappings specific LSP related items.
@@ -194,6 +202,18 @@ return { -- LSP Configuration & Plugins
                     },
                 },
             },
+            --jsonls = {},
+            --sqlls = {},
+            --yamlls = {},
+            --bashls = {},
+            --dockerls = {},
+            --docker_compose_language_service = {},
+            -- tailwindcss = {},
+            -- graphql = {},
+            -- html = { filetypes = { 'html', 'twig', 'hbs' } },
+            -- cssls = {},
+            -- ltex = {},
+            -- texlab = {},
         }
 
         -- Ensure the servers and tools above are installed
@@ -204,6 +224,7 @@ return { -- LSP Configuration & Plugins
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
             "stylua", -- Used to format lua code
+            "prettier",
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
